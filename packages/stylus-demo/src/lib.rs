@@ -27,6 +27,7 @@ extern crate alloc;
 
 /// Import items from the SDK. The prelude contains common traits and macros.
 use stylus_sdk::{alloy_primitives::U256, prelude::*};
+use stylus_cache_sdk::{is_contract_cacheable};
 
 // Define some persistent storage using the Solidity ABI.
 // `Counter` will be the entrypoint.
@@ -40,8 +41,13 @@ sol_storage! {
 /// Declare that `Counter` is a contract with the following external methods.
 #[public]
 impl Counter {
+
+    pub fn is_cacheable(&self) -> bool {
+        is_contract_cacheable()
+    }
+
     /// Gets the number from storage.
-    pub fn number(&self) -> U256 {
+    pub fn number_rj(&self) -> U256 {
         self.number.get()
     }
 
